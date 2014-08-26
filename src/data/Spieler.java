@@ -1,9 +1,14 @@
 package data;
 
+import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Spieler {
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class Spieler extends JPanel {
+	private static final long serialVersionUID = -4032195953189702670L;
 	private List<Karte> karten;
 	private String spieler;
 
@@ -15,6 +20,12 @@ public class Spieler {
 		karten = new ArrayList<Karte>();
 		for (int i = 0; i < maxKarten; i++) {
 			karten.add(kartenStapel.getStapel().pop());
+		}
+
+		setLayout(new FlowLayout());
+		add(new JLabel(spieler + ":"));
+		for (Karte karte : karten) {
+			add(karte);
 		}
 	}
 

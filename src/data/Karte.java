@@ -2,7 +2,10 @@ package data;
 
 import java.util.Random;
 
-public class Karte {
+import javax.swing.JButton;
+
+public class Karte extends JButton {
+	private static final long serialVersionUID = -4284204191584865075L;
 	private Farbe farbe;
 	private Zahl zahl;
 
@@ -18,6 +21,10 @@ public class Karte {
 
 		Zahl[] zahlen = Zahl.values();
 		this.setZahl(zahlen[rand.nextInt(zahlen.length - 1)]);
+
+		setSize(100, 50);
+		setVisible(true);
+		setText(this.toString());
 	}
 
 	public Farbe getFarbe() {
