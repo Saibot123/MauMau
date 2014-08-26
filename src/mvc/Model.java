@@ -50,5 +50,4 @@ public class Model {
 	public Karte getObersteKarte() {
 		return obersteKarte;
 	}
-
 }
