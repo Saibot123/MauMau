@@ -23,6 +23,11 @@ public class Spieler extends JPanel {
 		}
 
 		setLayout(new FlowLayout());
+	}
+
+	public void updatePanel() {
+		removeAll();
+		repaint();
 		add(new JLabel(spieler + ":"));
 		for (Karte karte : karten) {
 			add(karte);

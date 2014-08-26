@@ -45,8 +45,9 @@ public class View extends JFrame {
 
 	private void initSpielerKarten() {
 		spielerKarten = model.getAktuellenSpieler();
+		((Spieler) spielerKarten).updatePanel();
 		int width = ((Spieler) spielerKarten).getKarten().size() * (model.getObersteKarte().getWidth() + 50);
-		spielerKarten.setBounds(getWidth() / 2 - (width / 2), model.getObersteKarte().getHeight() + 100, width, model.getObersteKarte().getHeight());
+		spielerKarten.setBounds(getWidth() / 2 - (width / 2), model.getObersteKarte().getHeight() + 100, width, model.getObersteKarte().getHeight() * 2);
 		add(spielerKarten);
 	}
 
@@ -69,5 +70,24 @@ public class View extends JFrame {
 		for (Karte karte : ((Spieler) spielerKarten).getKarten()) {
 			karte.addActionListener(al);
 		}
+	}
+
+	public void updateObersteKarte(Karte karte) {
+		obersteKarte.removeAll();
+		repaint();
+		JLabel karteLabel = new JLabel(karte.toString());
+		obersteKarte.add(karteLabel);
+		obersteKarte.validate();
+	}
+
+	public void updateSpielerKarten() {
+		// TODO update funktioniert nur für einen Spieler... Vielleicht sollte
+		// das unter ein CardLayout gepackt werden in einen separaten Container
+		spielerKarten = model.getAktuellenSpieler();
+		((Spieler) spielerKarten).updatePanel();
+		int width = ((Spieler) spielerKarten).getKarten().size() * (model.getObersteKarte().getWidth() + 50);
+		width = (width > WIDTH) ? WIDTH : width;
+		spielerKarten.setBounds(getWidth() / 2 - (width / 2), model.getObersteKarte().getHeight() + 100, width, model.getObersteKarte().getHeight() * 2);
+		spielerKarten.validate();
 	}
 }
