@@ -8,6 +8,15 @@ public class Stapel {
 	private Stack<Karte> stapel;
 	private int size;
 	private static Stapel instance;
+	private CallBack controller;
+
+	public interface CallBack {
+		List<Spieler> getAllSpieler();
+	}
+
+	public void setController(CallBack controller) {
+		this.controller = controller;
+	}
 
 	public static Stapel getInstance() {
 		if (instance == null) {
@@ -53,18 +62,18 @@ public class Stapel {
 	}
 
 	public Karte getKarte() {
-		// if (stapel.size() == 0) {
-		// List<Karte> momentanImSpiel = new ArrayList<Karte>();
-		// List<Spieler> spieler = Controller.getInstance(0).getSpieler();
-		// for (Spieler sp : spieler) {
-		// momentanImSpiel.addAll(sp.getKarten());
-		// }
-		// fillStapel(momentanImSpiel);
-		// if (stapel.size() == 0) {
-		// System.err.println("Es sind alle Karten im Spiel. Spiel wird abgebrochen.");
-		// Controller.getInstance(0).finishGame();
-		// }
-		// }
+		if (stapel.size() == 0) {
+			List<Karte> momentanImSpiel = new ArrayList<Karte>();
+			List<Spieler> spieler = controller.getAllSpieler();
+			for (Spieler sp : spieler) {
+				momentanImSpiel.addAll(sp.getKarten());
+			}
+			fuelleStapel(momentanImSpiel);
+			if (stapel.size() == 0) {
+				System.err.println("Es sind alle Karten im Spiel. Spiel wird abgebrochen.");
+				return null;
+			}
+		}
 		return stapel.pop();
 	}
 }

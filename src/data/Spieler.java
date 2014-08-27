@@ -48,8 +48,14 @@ public class Spieler extends JPanel {
 		return karten;
 	}
 
-	public void ziehen() {
-		karten.add(Stapel.getInstance().getKarte());
+	public boolean ziehen() {
+		Karte karte = Stapel.getInstance().getKarte();
+		if (karte == null) {
+			return false;
+		} else {
+			karten.add(karte);
+			return true;
+		}
 	}
 
 	public Karte karteAusspielen(Karte karte) {

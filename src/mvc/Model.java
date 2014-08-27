@@ -6,9 +6,10 @@ import java.util.List;
 import data.Karte;
 import data.Spieler;
 import data.Stapel;
+import data.Stapel.CallBack;
 import data.Zahl;
 
-public class Model {
+public class Model implements CallBack {
 	private final int MAX_KARTEN = 32;
 	private final int MAX_SPIELER = 3;
 	private final int MAX_KARTEN_PRO_SPIELER = 6;
@@ -24,6 +25,7 @@ public class Model {
 		zuZiehendeKarten = 0;
 		erstelleSpieler();
 		setObersteKarte(null);
+		Stapel.getInstance().setController(this);
 	}
 
 	private void erstelleSpieler() {
@@ -35,6 +37,7 @@ public class Model {
 		}
 	}
 
+	@Override
 	public List<Spieler> getAllSpieler() {
 		return spieler;
 	}
@@ -102,14 +105,19 @@ public class Model {
 		spieler.get(aktuellerSpieler).karteAusspielen(karte);
 	}
 
-	public void aktuellerSpielerZiehen() {
+	public boolean aktuellerSpielerZiehen() {
 		if (letzteKarteSieben) {
 			for (int i = 0; i < zuZiehendeKarten; i++) {
-				spieler.get(aktuellerSpieler).ziehen();
+				if (!spieler.get(aktuellerSpieler).ziehen()) {
+					return false;
+				}
 			}
 			letzteKarteSieben = false;
 		} else {
-			spieler.get(aktuellerSpieler).ziehen();
+			if (!spieler.get(aktuellerSpieler).ziehen()) {
+				return false;
+			}
 		}
+		return true;
 	}
 }

@@ -29,7 +29,9 @@ public class Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getActionCommand().equalsIgnoreCase("ziehen")) {
-					model.aktuellerSpielerZiehen();
+					if (!model.aktuellerSpielerZiehen()) {
+						view.showEndGamePanelDueToNoCards();
+					}
 					generelleAktionen();
 				} else {
 					String[] farbZahl = e.getActionCommand().split(" ");
@@ -51,6 +53,9 @@ public class Controller {
 	private void validiereKarte(Karte karte) {
 		if (model.validiereGespielteKarte(karte)) {
 			model.spieleKarteDesAktuellenSpielers(karte);
+			if (model.getAktuellenSpieler().getKarten().size() == 0) {
+				view.showEndGamePanelDueToWinningPlayer();
+			}
 			prüfeObersteKarteAufSpezielleFunktion(false);
 			generelleAktionen();
 		}
