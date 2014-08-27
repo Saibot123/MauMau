@@ -29,20 +29,28 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getActionCommand().equalsIgnoreCase("ziehen")) {
 					model.getAktuellenSpieler().ziehen();
+					generelleAktionen();
 				} else {
 					String[] farbZahl = e.getActionCommand().split(" ");
 					Karte karte = new Karte(Farbe.valueOf(farbZahl[0].trim()), Zahl.valueOf(farbZahl[1].trim()));
-					if (model.validiereGespielteKarte(karte)) {
-						model.spieleKarteDesAktuellenSpielers(karte);
-						view.updateObersteKarte();
-					}
+					validiereKarte(karte);
 				}
-				// model.getAktuellenSpieler().updatePanel();
-				// model.naechsterSpieler();
-				view.updateSpielerKarten();
-				view.addKartenListener(erstelleListener());
-
 			}
 		};
+	}
+
+	private void generelleAktionen() {
+		model.naechsterSpieler();
+		model.getAktuellenSpieler().updatePanel();
+		view.updateSpielerKarten();
+		view.updateObersteKarte();
+		view.addKartenListener(erstelleListener());
+	}
+
+	private void validiereKarte(Karte karte) {
+		if (model.validiereGespielteKarte(karte)) {
+			model.spieleKarteDesAktuellenSpielers(karte);
+			generelleAktionen();
+		}
 	}
 }
