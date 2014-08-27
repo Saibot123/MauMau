@@ -28,7 +28,7 @@ public class Controller {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getActionCommand().equalsIgnoreCase("ziehen")) {
-					model.getAktuellenSpieler().ziehen();
+					model.aktuellerSpielerZiehen();
 					generelleAktionen();
 				} else {
 					String[] farbZahl = e.getActionCommand().split(" ");
@@ -50,6 +50,7 @@ public class Controller {
 	private void validiereKarte(Karte karte) {
 		if (model.validiereGespielteKarte(karte)) {
 			model.spieleKarteDesAktuellenSpielers(karte);
+			model.checkForSpecialFunction();
 			generelleAktionen();
 		}
 	}

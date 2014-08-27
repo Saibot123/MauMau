@@ -91,11 +91,5 @@ public class View extends JFrame {
 	public void updateSpielerKarten() {
 		CardLayout cl = (CardLayout) kartenPanel.getLayout();
 		cl.show(kartenPanel, model.getAktuellenSpieler().getSpielerName());
-		// int width = (model.getAktuellenSpieler().getKarten().size() *
-		// (model.getObersteKarte().getWidth() + 50));
-		// width = (width > WIDTH) ? WIDTH : width;
-		// kartenPanel.setBounds(getWidth() / 2 - (width / 2),
-		// model.getObersteKarte().getHeight() + 100, width,
-		// model.getObersteKarte().getHeight() * 2);
 	}
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import data.Karte;
 import data.Spieler;
 import data.Stapel;
+import data.Zahl;
 
 public class Model {
 	private final int MAX_KARTEN = 32;
@@ -14,9 +15,13 @@ public class Model {
 	private List<Spieler> spieler;
 	private int aktuellerSpieler;
 	private Karte obersteKarte;
+	private int zuZiehendeKarten;
+	private boolean letzteKarteSieben;
 
 	public Model() {
 		aktuellerSpieler = 0;
+		letzteKarteSieben = false;
+		zuZiehendeKarten = 0;
 		erstelleSpieler();
 		setObersteKarte(null);
 	}
@@ -54,17 +59,54 @@ public class Model {
 	}
 
 	public boolean validiereGespielteKarte(Karte karte) {
-		boolean karteIstOk = false;
-
-		if (karte.getFarbe().equals(obersteKarte.getFarbe()) || karte.getZahl().equals(obersteKarte.getZahl())) {
-			karteIstOk = true;
+		if (obersteKarte.getZahl().equals(Zahl.ALL)) {
+			return karte.getFarbe().equals(obersteKarte.getFarbe());
+		}
+		if (obersteKarte.getZahl().equals(Zahl.SIEBEN) && letzteKarteSieben) {
+			return karte.getZahl().equals(Zahl.SIEBEN);
+		}
+		if (obersteKarte.getZahl().equals(Zahl.BUBE) && karte.getZahl().equals(Zahl.BUBE)) {
+			return false;
+		}
+		if (karte.getZahl().equals(Zahl.BUBE)) {
+			return true;
 		}
 
-		return karteIstOk;
+		return karte.getFarbe().equals(obersteKarte.getFarbe()) || karte.getZahl().equals(obersteKarte.getZahl());
+
+	}
+
+	public void checkForSpecialFunction() {
+		if (obersteKarte.getZahl().getAction() != null) {
+			switch (obersteKarte.getZahl().getAction()) {
+			case ZWEI_ZIEHEN:
+				letzteKarteSieben = true;
+				zuZiehendeKarten += 2;
+				break;
+			case AUSSETZEN:
+				naechsterSpieler();
+				break;
+			case WÜNSCHEN:
+				break;
+			default:
+				break;
+			}
+		}
 	}
 
 	public void spieleKarteDesAktuellenSpielers(Karte karte) {
 		setObersteKarte(karte);
 		spieler.get(aktuellerSpieler).karteAusspielen(karte);
+	}
+
+	public void aktuellerSpielerZiehen() {
+		if (letzteKarteSieben) {
+			for (int i = 0; i < zuZiehendeKarten; i++) {
+				spieler.get(aktuellerSpieler).ziehen();
+			}
+			letzteKarteSieben = false;
+		} else {
+			spieler.get(aktuellerSpieler).ziehen();
+		}
 	}
 }
