@@ -7,8 +7,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import data.Farbe;
 import data.Karte;
 import data.Spieler;
 
@@ -91,5 +93,12 @@ public class View extends JFrame {
 	public void updateSpielerKarten() {
 		CardLayout cl = (CardLayout) kartenPanel.getLayout();
 		cl.show(kartenPanel, model.getAktuellenSpieler().getSpielerName());
+	}
+
+	public Farbe doWuenschenAction() {
+		Object[] options = Farbe.values();
+		int wahl = JOptionPane.showOptionDialog(this, "Welche Farbe wünschst du dir?", "Farbe wählen", JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE, null, options, null);
+		return (Farbe) options[wahl];
 	}
 }

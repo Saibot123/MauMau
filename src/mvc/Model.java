@@ -76,7 +76,8 @@ public class Model {
 
 	}
 
-	public void checkForSpecialFunction() {
+	public boolean checkForSpecialFunctionAndNeedsMoreAction() {
+		boolean isMoreActionRequired = false;
 		if (obersteKarte.getZahl().getAction() != null) {
 			switch (obersteKarte.getZahl().getAction()) {
 			case ZWEI_ZIEHEN:
@@ -87,11 +88,13 @@ public class Model {
 				naechsterSpieler();
 				break;
 			case WÜNSCHEN:
+				isMoreActionRequired = true;
 				break;
 			default:
 				break;
 			}
 		}
+		return isMoreActionRequired;
 	}
 
 	public void spieleKarteDesAktuellenSpielers(Karte karte) {

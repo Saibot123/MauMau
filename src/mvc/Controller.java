@@ -50,7 +50,10 @@ public class Controller {
 	private void validiereKarte(Karte karte) {
 		if (model.validiereGespielteKarte(karte)) {
 			model.spieleKarteDesAktuellenSpielers(karte);
-			model.checkForSpecialFunction();
+			if (model.checkForSpecialFunctionAndNeedsMoreAction()) {
+				Farbe farbe = view.doWuenschenAction();
+				model.setObersteKarte(new Karte(farbe, Zahl.ALL));
+			}
 			generelleAktionen();
 		}
 	}
