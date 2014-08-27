@@ -16,6 +16,7 @@ public class Controller {
 		this.view = view;
 
 		setListeners();
+		prüfeObersteKarteAufSpezielleFunktion(true);
 	}
 
 	private void setListeners() {
@@ -50,11 +51,21 @@ public class Controller {
 	private void validiereKarte(Karte karte) {
 		if (model.validiereGespielteKarte(karte)) {
 			model.spieleKarteDesAktuellenSpielers(karte);
-			if (model.checkForSpecialFunctionAndNeedsMoreAction()) {
-				Farbe farbe = view.doWuenschenAction();
-				model.setObersteKarte(new Karte(farbe, Zahl.ALL));
-			}
+			prüfeObersteKarteAufSpezielleFunktion(false);
 			generelleAktionen();
+		}
+	}
+
+	private void prüfeObersteKarteAufSpezielleFunktion(boolean isErsteKarte) {
+		if (model.checkForSpecialFunctionAndNeedsMoreAction()) {
+			Farbe farbe = view.doWuenschenAction();
+			model.setObersteKarte(new Karte(farbe, Zahl.ALL));
+		}
+		if (isErsteKarte) {
+			model.getAktuellenSpieler().updatePanel();
+			view.updateSpielerKarten();
+			view.updateObersteKarte();
+			view.addKartenListener(erstelleListener());
 		}
 	}
 }
