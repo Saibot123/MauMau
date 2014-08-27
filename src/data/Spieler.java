@@ -13,6 +13,7 @@ public class Spieler extends JPanel {
 	private String spieler;
 
 	public Spieler(String spieler, int maxKarten, Stapel kartenStapel) {
+		super();
 		if (maxKarten < 1 || maxKarten > kartenStapel.getStapel().size()) {
 			throw new IllegalArgumentException("Nicht genügend Karten verfügbar");
 		}
@@ -23,11 +24,11 @@ public class Spieler extends JPanel {
 		}
 
 		setLayout(new FlowLayout());
+		updatePanel();
 	}
 
 	public void updatePanel() {
 		removeAll();
-		repaint();
 		add(new JLabel(spieler + ":"));
 		for (Karte karte : karten) {
 			add(karte);
@@ -52,7 +53,12 @@ public class Spieler extends JPanel {
 	}
 
 	public Karte karteAusspielen(Karte karte) {
-		karten.remove(karte);
+		for (Karte karteSpieler : karten) {
+			if (karteSpieler.vergleiche(karte)) {
+				karten.remove(karten.indexOf(karteSpieler));
+				break;
+			}
+		}
 		return karte;
 	}
 
