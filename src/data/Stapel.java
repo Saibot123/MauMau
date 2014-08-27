@@ -28,12 +28,21 @@ public class Stapel {
 
 	private void fuelleStapel(List<Karte> momentanImSpiel) {
 		for (int i = 0; i < size; i++) {
+			boolean kannGezogenWerden = true;
 			Karte karte = new Karte();
-			if (stapel.contains(karte)) {
-				i--;
-			} else if (momentanImSpiel.contains(karte)) {
-				continue;
-			} else {
+			for (Karte stapelKarte : stapel) {
+				if (karte.vergleiche(stapelKarte)) {
+					kannGezogenWerden = false;
+					i--;
+				}
+			}
+
+			for (Karte karteImSpiel : momentanImSpiel) {
+				if (karte.vergleiche(karteImSpiel)) {
+					kannGezogenWerden = false;
+				}
+			}
+			if (kannGezogenWerden) {
 				stapel.push(karte);
 			}
 		}
