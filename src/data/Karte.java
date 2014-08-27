@@ -54,7 +54,16 @@ public class Karte extends JButton {
 
 	@Override
 	public boolean equals(Object obj) {
-		Karte karte = (Karte) obj;
+		Karte karte = null;
+		try {
+			karte = (Karte) obj;
+		} catch (Exception e) {
+			super.equals(obj);
+		}
+		if (karte == null) {
+			System.err.println("Hier stimmt was nicht.");
+			return false;
+		}
 		return karte.getFarbe() == this.farbe && karte.getZahl() == this.zahl;
 	}
 }
