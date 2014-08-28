@@ -57,6 +57,8 @@ public class Controller {
 				view.showEndGamePanel(model.getAktuellenSpieler().getSpielerName() + model.getEND_MSG_WINNING_PLAYER());
 			}
 			prüfeObersteKarteAufSpezielleFunktion(false);
+			model.getAktuellenSpieler().updatePanel();
+			view.updateSpielerKarten();
 			generelleAktionen();
 		}
 	}
