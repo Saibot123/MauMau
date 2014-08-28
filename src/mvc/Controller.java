@@ -54,7 +54,7 @@ public class Controller {
 		if (model.validiereGespielteKarte(karte)) {
 			model.spieleKarteDesAktuellenSpielers(karte);
 			if (model.getAktuellenSpieler().getKarten().size() == 0) {
-				view.showEndGamePanel(model.getAktuellenSpieler().getName() + model.getEND_MSG_WINNING_PLAYER());
+				view.showEndGamePanel(model.getAktuellenSpieler().getSpielerName() + model.getEND_MSG_WINNING_PLAYER());
 			}
 			prüfeObersteKarteAufSpezielleFunktion(false);
 			generelleAktionen();
