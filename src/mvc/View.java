@@ -17,7 +17,7 @@ import data.Spieler;
 import data.Zahl;
 
 public class View extends JFrame {
-	private static final int HEIGHT = 500;
+	private static final int HEIGHT = 600;
 	private static final int WIDTH = 1000;
 	private static final String TITLE = "Mau Mau";
 
