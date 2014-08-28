@@ -29,7 +29,25 @@ public class View extends JFrame {
 	public View(Model model) {
 		this.model = model;
 		askForPlayers();
+		askForComputerPlayers();
 		erstelleGUI();
+	}
+
+	private void askForComputerPlayers() {
+		Integer[] options = new Integer[model.getAllSpieler().size() + 1];
+		for (int i = 0; i <= model.getAllSpieler().size(); i++) {
+			options[i] = i;
+		}
+		int wahl = JOptionPane.showOptionDialog(this, "Wieviele davon sind ComputerGegner?", "Ende", JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE, null, options, null);
+		if (wahl < 0) {
+			askForComputerPlayers();
+			return;
+		}
+		for (int i = model.getAllSpieler().size() - 1; i >= 0; i--) {
+			model.getAllSpieler().get(i).setComputerSpieler(wahl > 0);
+			wahl--;
+		}
 	}
 
 	private void askForPlayers() {
@@ -116,7 +134,7 @@ public class View extends JFrame {
 		Object[] options = Farbe.values();
 		int wahl = JOptionPane.showOptionDialog(this, "Welche Farbe wünschst du dir?", "Farbe wählen", JOptionPane.YES_NO_CANCEL_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null, options, null);
-		return (wahl > 0) ? null : (Farbe) options[wahl];
+		return (wahl < 0) ? null : (Farbe) options[wahl];
 	}
 
 	public void showEndGamePanel(String msg) {
@@ -129,5 +147,13 @@ public class View extends JFrame {
 			this.dispose();
 			MauMau.main(null);
 		}
+	}
+
+	public void doClickOnCard(int index) {
+		((JButton) ((Spieler) kartenPanel.getComponent(model.getAllSpieler().indexOf(model.getAktuellenSpieler()))).getKarten().get(index)).doClick();
+	}
+
+	public void doClickOnZiehen() {
+		ziehenButton.doClick();
 	}
 }

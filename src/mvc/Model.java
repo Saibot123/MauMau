@@ -136,4 +136,5 @@ public class Model implements CallBack {
 	public String getEND_MSG_WINNING_PLAYER() {
 		return END_MSG_WINNING_PLAYER;
 	}
+
 }

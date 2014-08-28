@@ -11,6 +11,7 @@ public class Spieler extends JPanel {
 	private static final long serialVersionUID = -4032195953189702670L;
 	private List<Karte> karten;
 	private String spieler;
+	private boolean isComputerSpieler;
 
 	public Spieler(String spieler, int maxKarten, Stapel kartenStapel) {
 		super();
@@ -70,5 +71,13 @@ public class Spieler extends JPanel {
 
 	public String getSpielerName() {
 		return spieler;
+	}
+
+	public boolean isComputerSpieler() {
+		return isComputerSpieler;
+	}
+
+	public void setComputerSpieler(boolean isComputerSpieler) {
+		this.isComputerSpieler = isComputerSpieler;
 	}
 }

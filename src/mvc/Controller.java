@@ -2,6 +2,9 @@ package mvc;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+
+import computer.ComputerSpieler;
 
 import data.Farbe;
 import data.Karte;
@@ -11,12 +14,15 @@ public class Controller {
 	private View view;
 	private Model model;
 
+	private ComputerSpieler computerSpieler;
+
 	public Controller(Model model, View view) {
 		this.model = model;
 		this.view = view;
 
 		setListeners();
 		prüfeObersteKarteAufSpezielleFunktion(true);
+		checkForComputerSpieler();
 	}
 
 	private void setListeners() {
@@ -48,6 +54,16 @@ public class Controller {
 		view.updateSpielerKarten();
 		view.updateObersteKarte();
 		view.addKartenListener(erstelleListener());
+		checkForComputerSpieler();
+	}
+
+	private void checkForComputerSpieler() {
+		if (model.getAktuellenSpieler().isComputerSpieler()) {
+			model.getAktuellenSpieler().updatePanel();
+			view.updateSpielerKarten();
+			computerSpieler = new ComputerSpieler(this);
+			computerSpieler.run();
+		}
 	}
 
 	private void validiereKarte(Karte karte) {
@@ -65,9 +81,11 @@ public class Controller {
 
 	private void prüfeObersteKarteAufSpezielleFunktion(boolean isErsteKarte) {
 		if (model.checkForSpecialFunctionAndNeedsMoreAction()) {
-			Farbe farbe = view.doWuenschenAction();
-			if (farbe == null) {
-
+			Farbe farbe = null;
+			if (model.getAktuellenSpieler().isComputerSpieler()) {
+				farbe = computerSpieler.askComputerForFarbe();
+			} else {
+				farbe = view.doWuenschenAction();
 			}
 			model.setObersteKarte(new Karte(farbe, Zahl.ALL));
 		}
@@ -77,5 +95,25 @@ public class Controller {
 			view.updateObersteKarte();
 			view.addKartenListener(erstelleListener());
 		}
+	}
+
+	public List<Karte> getSpielerKarten() {
+		return model.getAktuellenSpieler().getKarten();
+	}
+
+	public Karte getObersteKarte() {
+		return model.getObersteKarte();
+	}
+
+	public void doClickOnCard(Integer index) {
+		if (index == null) {
+			view.doClickOnZiehen();
+		} else {
+			view.doClickOnCard(index);
+		}
+	}
+
+	public boolean istKarteSpielbar(Karte karte) {
+		return model.validiereGespielteKarte(karte);
 	}
 }
