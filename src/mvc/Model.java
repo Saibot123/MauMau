@@ -13,6 +13,9 @@ public class Model implements CallBack {
 	private final int MAX_KARTEN = 32;
 	private final int MAX_SPIELER = 3;
 	private final int MAX_KARTEN_PRO_SPIELER = 6;
+	private final String END_MSG_NO_CARDS = "Dieses Spiel ist beendet. Es sind keine Karten mehr im Spiel. Möchtest du noch einmal spielen?";
+	private final String END_MSG_WINNING_PLAYER = " hat das Spiel gewonnen. Möchtest du noch einmal spielen?";
+
 	private List<Spieler> spieler;
 	private int aktuellerSpieler;
 	private Karte obersteKarte;
@@ -119,5 +122,13 @@ public class Model implements CallBack {
 			}
 		}
 		return true;
+	}
+
+	public String getEND_MSG_NO_CARDS() {
+		return END_MSG_NO_CARDS;
+	}
+
+	public String getEND_MSG_WINNING_PLAYER() {
+		return END_MSG_WINNING_PLAYER;
 	}
 }

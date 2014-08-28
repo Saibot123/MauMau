@@ -103,24 +103,9 @@ public class View extends JFrame {
 		return (Farbe) options[wahl];
 	}
 
-	public void showEndGamePanelDueToNoCards() {
+	public void showEndGamePanel(String msg) {
 		Object[] options = { "Ja", "Nein" };
-		int wahl = JOptionPane.showOptionDialog(this, "Dieses Spiel ist beendet. Es sind keine Karten mehr im Spiel. Möchtest du noch einmal spielen?", "Ende",
-				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
-		if (wahl == 1) {
-			System.exit(0);
-		} else {
-			this.removeAll();
-			this.dispose();
-			MauMau.main(null);
-		}
-	}
-
-	public void showEndGamePanelDueToWinningPlayer() {
-		Object[] options = { "Ja", "Nein" };
-		int wahl = JOptionPane.showOptionDialog(this, model.getAktuellenSpieler().getSpielerName()
-				+ " hat das Spiel gewonnen. Möchtest du noch einmal spielen?", "Sieg", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-				options, null);
+		int wahl = JOptionPane.showOptionDialog(this, msg, "Ende", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
 		if (wahl == 1) {
 			System.exit(0);
 		} else {

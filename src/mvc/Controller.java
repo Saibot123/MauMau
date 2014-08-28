@@ -30,7 +30,7 @@ public class Controller {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getActionCommand().equalsIgnoreCase("ziehen")) {
 					if (!model.aktuellerSpielerZiehen()) {
-						view.showEndGamePanelDueToNoCards();
+						view.showEndGamePanel(model.getEND_MSG_NO_CARDS());
 					}
 					generelleAktionen();
 				} else {
@@ -54,7 +54,7 @@ public class Controller {
 		if (model.validiereGespielteKarte(karte)) {
 			model.spieleKarteDesAktuellenSpielers(karte);
 			if (model.getAktuellenSpieler().getKarten().size() == 0) {
-				view.showEndGamePanelDueToWinningPlayer();
+				view.showEndGamePanel(model.getAktuellenSpieler().getName() + model.getEND_MSG_WINNING_PLAYER());
 			}
 			prüfeObersteKarteAufSpezielleFunktion(false);
 			generelleAktionen();
