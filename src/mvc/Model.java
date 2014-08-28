@@ -11,7 +11,7 @@ import data.Zahl;
 
 public class Model implements CallBack {
 	private final int MAX_KARTEN = 32;
-	private final int MAX_SPIELER = 2;
+	private int MAX_SPIELER;
 	private final int MAX_KARTEN_PRO_SPIELER = 6;
 	private final String END_MSG_NO_CARDS = "Dieses Spiel ist beendet. Es sind keine Karten mehr im Spiel. Möchtest du noch einmal spielen?";
 	private final String END_MSG_WINNING_PLAYER = " hat das Spiel gewonnen. Möchtest du noch einmal spielen?";
@@ -26,6 +26,10 @@ public class Model implements CallBack {
 		aktuellerSpieler = 0;
 		letzteKarteSieben = false;
 		zuZiehendeKarten = 0;
+	}
+
+	public void setSpieler(int anz) {
+		MAX_SPIELER = anz;
 		erstelleSpieler();
 		setObersteKarte(null);
 		Stapel.getInstance().setController(this);

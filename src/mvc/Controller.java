@@ -66,6 +66,9 @@ public class Controller {
 	private void prüfeObersteKarteAufSpezielleFunktion(boolean isErsteKarte) {
 		if (model.checkForSpecialFunctionAndNeedsMoreAction()) {
 			Farbe farbe = view.doWuenschenAction();
+			if (farbe == null) {
+
+			}
 			model.setObersteKarte(new Karte(farbe, Zahl.ALL));
 		}
 		if (isErsteKarte) {

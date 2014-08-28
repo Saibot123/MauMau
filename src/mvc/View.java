@@ -28,7 +28,19 @@ public class View extends JFrame {
 
 	public View(Model model) {
 		this.model = model;
+		askForPlayers();
 		erstelleGUI();
+	}
+
+	private void askForPlayers() {
+		Integer[] options = { 2, 3, 4, 5 };
+		int wahl = JOptionPane.showOptionDialog(this, "Wieviele Spieler spielen mit?", "Ende", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
+				null, options, null);
+		if (wahl < 0) {
+			askForPlayers();
+			return;
+		}
+		model.setSpieler(options[wahl]);
 	}
 
 	private void erstelleGUI() {
@@ -104,7 +116,7 @@ public class View extends JFrame {
 		Object[] options = Farbe.values();
 		int wahl = JOptionPane.showOptionDialog(this, "Welche Farbe wünschst du dir?", "Farbe wählen", JOptionPane.YES_NO_CANCEL_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null, options, null);
-		return (Farbe) options[wahl];
+		return (wahl > 0) ? null : (Farbe) options[wahl];
 	}
 
 	public void showEndGamePanel(String msg) {
