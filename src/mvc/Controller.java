@@ -34,7 +34,7 @@ public class Controller {
 					}
 					generelleAktionen();
 				} else {
-					String[] farbZahl = e.getActionCommand().split(" ");
+					String[] farbZahl = ((Karte) e.getSource()).toString().split(" ");
 					Karte karte = new Karte(Farbe.valueOf(farbZahl[0].trim()), Zahl.valueOf(farbZahl[1].trim()));
 					validiereKarte(karte);
 				}

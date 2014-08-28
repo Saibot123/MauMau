@@ -14,6 +14,7 @@ import start.MauMau;
 import data.Farbe;
 import data.Karte;
 import data.Spieler;
+import data.Zahl;
 
 public class View extends JFrame {
 	private static final int HEIGHT = 500;
@@ -56,7 +57,7 @@ public class View extends JFrame {
 			kartenPanel.add(spieler, spieler.getSpielerName());
 			width = (spieler.getKarten().size() * (model.getObersteKarte().getWidth() + 50));
 		}
-		kartenPanel.setBounds(getWidth() / 2 - (width / 2), model.getObersteKarte().getHeight() + 100, width, model.getObersteKarte().getHeight() * 2);
+		kartenPanel.setBounds(getWidth() / 2 - (width / 2), model.getObersteKarte().getHeight() + 100, width, model.getObersteKarte().getHeight() * 2 + 30);
 		add(kartenPanel);
 	}
 
@@ -64,10 +65,9 @@ public class View extends JFrame {
 		obersteKarte = new JPanel();
 		obersteKarte.setLayout(new FlowLayout());
 
-		JLabel karte = new JLabel(model.getObersteKarte().toString());
-		obersteKarte.add(karte);
+		obersteKarte.add(model.getObersteKarte());
 		obersteKarte.setBounds(getWidth() / 2 - (model.getObersteKarte().getWidth() / 2), 50, model.getObersteKarte().getWidth(), model.getObersteKarte()
-				.getHeight());
+				.getHeight() + 30);
 		add(obersteKarte);
 	}
 
@@ -85,10 +85,14 @@ public class View extends JFrame {
 
 	public void updateObersteKarte() {
 		obersteKarte.removeAll();
-		repaint();
-		JLabel karteLabel = new JLabel(model.getObersteKarte().toString());
-		obersteKarte.add(karteLabel);
-		validate();
+		obersteKarte.repaint();
+		model.getObersteKarte().updateKarteGUI();
+		if (model.getObersteKarte().getZahl().equals(Zahl.ALL)) {
+			obersteKarte.add(new JLabel(model.getObersteKarte().toString()));
+		} else {
+			obersteKarte.add(model.getObersteKarte());
+		}
+		obersteKarte.validate();
 	}
 
 	public void updateSpielerKarten() {

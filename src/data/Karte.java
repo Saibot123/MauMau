@@ -2,6 +2,7 @@ package data;
 
 import java.util.Random;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class Karte extends JButton {
@@ -22,9 +23,17 @@ public class Karte extends JButton {
 		Zahl[] zahlen = Zahl.values();
 		this.setZahl(zahlen[rand.nextInt(zahlen.length - 1)]);
 
-		setSize(100, 50);
+		updateKarteGUI();
+	}
+
+	public void updateKarteGUI() {
+		removeAll();
+		repaint();
+		setSize(70, 103);
 		setVisible(true);
-		setText(this.toString());
+		setBorderPainted(false);
+		setBorder(null);
+		setIcon(new ImageIcon("./Bilder/" + toString() + ".gif"));
 	}
 
 	public Farbe getFarbe() {
